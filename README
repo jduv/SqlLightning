@@ -21,7 +21,7 @@ using only SqlLightning if the need arose. SqlLightning allows the developer to
 design and implement a data access layer forcing best practices set forth by 
 Microsoft. All calls to the database are required to be:
 
-	1. Implemented as a stored proceduer
+	1. Implemented as a stored procedure
 	2. Parameterized
 	3. Use DBSafe types.
 
