@@ -68,7 +68,7 @@ var ctx = SqlDbContext.Create(connStr);
 var connStr = ConfigurationManager.ConnectionStrings["myConnStr"].ToString();
 using (var ctx = SqlDbContext.Create(connStr))
 {
-    ctx.ExecuteDataTable(
+    ctx.ExecuteNonQuery(
         "sp_InsertProduct",
         StoredProcParam.InParam("@name", DbType.String, "Hello"));
 }
@@ -77,7 +77,7 @@ using (var ctx = SqlDbContext.Create(connStr))
 
 using (var ctx = SqlDbContext.Create("test"))
 {
-    ctx.ExecuteDataTable(
+    ctx.ExecuteDataReader(
         "sp_InsertProduct",
         StoredProcParam.InParam("@name", DbType.String, "Hello"));
 
@@ -135,7 +135,7 @@ var rowVersion = ctx.ExecuteWithReturnValue<byte[]>(
 7. Run a stored procedure with an out value:
 
 var bit = StoredProcParam.OutParam("@someOutValue", DbType.Boolean);
-ctx.ExecuteReader("sp_performValidation",
+ctx.ExecuteNonQuery("sp_performValidation",
     StoredProcParam.InParam("@id", DbType.Int32, 1),
     bit);
 var bitValue = bit.Value; // grab the value after the call.
