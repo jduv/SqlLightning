@@ -121,9 +121,9 @@ using (var ctx = SqlDbContext.Create("test"))
                  };
 
 sqlDbContext.ExecuteSqlBulkCopy(
-							tableName: "Product", 
-							dataReader: products.AsDataReader(), // EDR
-							hasIdentity: true);
+	tableName: "Product", 
+	dataReader: products.AsDataReader(), // EDR
+	hasIdentity: true);
 
 6. Run a stored procedure with a return value:
 
