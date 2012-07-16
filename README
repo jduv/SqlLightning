@@ -69,18 +69,14 @@ var connStr = ConfigurationManager.ConnectionStrings["myConnStr"].ToString();
 using (var ctx = SqlDbContext.Create(connStr))
 {
     ctx.ExecuteNonQuery(
-        "sp_InsertProduct",
-        StoredProcParam.InParam("@name", DbType.String, "Hello"));
+        "sp_DeleteProducts",
+        StoredProcParam.InParam("@userName", DbType.String, "jduv"));
 }
 
 4. Run a stored procedure with some arbitrary actions:
 
 using (var ctx = SqlDbContext.Create("test"))
 {
-    ctx.ExecuteDataReader(
-        "sp_InsertProduct",
-        StoredProcParam.InParam("@name", DbType.String, "Hello"));
-
     // Gets all products and returns them.
     var products = ctx.ExecuteTransaction(
         new SqlCommand()
