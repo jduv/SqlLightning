@@ -5,18 +5,31 @@
     using System.Data.SqlClient;
 
     /// <summary>
-    /// Holds all the pertinate data for a stored procedure parameter, and can convert to miscellaneous
-    /// database parameter types as needed.
+    /// Holds all the pertinate data for a stored procedure parameter. Basically a light
+    /// wrapper over the SqlParameter class.
     /// </summary>
     public sealed class StoredProcParam
     {
+        #region Fields & Constants
+
+        /// <summary>
+        /// Internal SqlParameter so that in/out, out, and return value parameter types
+        /// work.
+        /// </summary>
+        private SqlParameter sqlParam;
+
+        #endregion
+
         #region Constructors & Destructors
 
         /// <summary>
         /// Prevents a default instance of the <see cref="StoredProcParam"/> class from being created.
         /// Use factory methods instead.
         /// </summary>
-        private StoredProcParam() { }
+        private StoredProcParam()
+        {
+            this.sqlParam = new SqlParameter();
+        }
 
         #endregion
 
@@ -27,8 +40,15 @@
         /// </summary>
         public object Value
         {
-            get;
-            private set;
+            get
+            {
+                return this.sqlParam.Value;
+            }
+
+            private set
+            {
+                this.sqlParam.Value = value;
+            }
         }
 
         /// <summary>
@@ -36,8 +56,15 @@
         /// </summary>
         public DbType Type
         {
-            get;
-            private set;
+            get
+            {
+                return this.sqlParam.DbType;
+            }
+
+            private set
+            {
+                this.sqlParam.DbType = value;
+            }
         }
 
         /// <summary>
@@ -45,8 +72,15 @@
         /// </summary>
         public string Name
         {
-            get;
-            private set;
+            get
+            {
+                return this.sqlParam.ParameterName;
+            }
+
+            private set
+            {
+                this.sqlParam.ParameterName = value;
+            }
         }
 
         /// <summary>
@@ -54,13 +88,30 @@
         /// </summary>
         public ParameterDirection Direction
         {
-            get;
-            private set;
+            get
+            {
+                return this.sqlParam.Direction;
+            }
+
+            private set
+            {
+                this.sqlParam.Direction = value;
+            }
         }
 
         #endregion
 
         #region Public Methods
+
+        /// <summary>
+        /// Allows conversion to a SqlParameter.
+        /// </summary>
+        /// <param name="param">The <see cref=" StoredProcParam"/> to cast.</param>
+        /// <returns>A compatible SqlParameter instance.</returns>
+        public static implicit operator SqlParameter(StoredProcParam param)
+        {
+            return param.sqlParam;
+        }
 
         /// <summary>
         /// Factory method for creating an input parameter.
@@ -94,7 +145,7 @@
             {
                 Direction = ParameterDirection.Output,
                 Name = name,
-                Type = type,                
+                Type = type,
             };
         }
 
@@ -112,7 +163,7 @@
             {
                 Direction = ParameterDirection.InputOutput,
                 Name = name,
-                Type = type,                
+                Type = type,
                 Value = value
             };
         }
@@ -132,22 +183,6 @@
                 Name = name,
                 Type = type
             };
-        }
-
-        /// <summary>
-        /// Converts this <see cref="StoredProcParam"/> into a SqlParameter.
-        /// </summary>
-        /// <returns>A SqlParameter based on the information contained inside this 
-        /// <see cref="StoredProcParam"/> instance.</returns>
-        public SqlParameter ToSqlParam()
-        {
-            return new SqlParameter()
-            {
-                Direction = this.Direction,
-                ParameterName = this.Name,                
-                Value = (this.Direction == ParameterDirection.Input || this.Direction == ParameterDirection.InputOutput) ? this.Value : null,
-                DbType = this.Type
-            };            
         }
 
         #endregion

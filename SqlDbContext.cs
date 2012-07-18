@@ -166,7 +166,7 @@
 
             foreach (var param in parameters)
             {
-                cmd.Parameters.Add(param.ToSqlParam());                
+                cmd.Parameters.Add(param);                
             }
 
             return cmd;
