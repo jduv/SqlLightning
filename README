@@ -29,6 +29,10 @@ Microsoft. All calls to the database are required to be:
 2. Parameterized
 3. Use DBSafe types.
 
+All calls to the database in question are wrapped in a transaction and rolled
+back in the event of an exception. The base object is also disposable, and 
+should be wrapped in a ```using``` block where necessary.
+
 Currently SqlLightning only supports a SQL server context--mainly because I
 haven't had the need to interface with other RDBMS systems. However,
 extensibility is clearly possible--check out the source for more information on
@@ -43,7 +47,7 @@ Often times some issues fall out of extremely flexible designs which include
 performance. SqlLightning enables developers to quickly and securely go 
 directly to the database when the need arises.
 
-A glaring exmaple of this is the way the current iteration of Microsoft's 
+A glaring example of this is the way the current iteration of Microsoft's 
 Entity Framework handles insertion on large numbers of objects. Currently,
 the query generator will create one SQL statement for every object added
 or updated in a given list--which can result in thousands, or tens of thousands
