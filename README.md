@@ -156,7 +156,8 @@ Run a stored procedure with an out value:
 var bit = StoredProcParam.OutParam("@someOutValue", DbType.Boolean);
 using(var ctx = SqlDbContext.Create(connStr))
 {
-    ctx.ExecuteNonQuery("sp_performValidation",
+    ctx.ExecuteNonQuery(
+        "sp_performValidation",
         StoredProcParam.InParam("@id", DbType.Int32, 1),
         bit);
 }
