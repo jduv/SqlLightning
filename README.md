@@ -64,21 +64,21 @@ very small, performant package.
 EXAMPLES
 --------
 
-* Create a SqlDbContext from an application connection string:
+Create a SqlDbContext from an application connection string:
 
 ```c#
 var connStr = ConfigurationManager.ConnectionStrings["myConnStr"].ToSTring();
 var ctx = SqlDbContext.Create(connStr);
 ```
 
-* Create a SqlDbContext from an existing Linq2Sql data context:
+Create a SqlDbContext from an existing Linq2Sql data context:
 
 ```c#
 var connectionString = linq2SqlContext.Connection.ConnectionString;
 var ctx = SqlDbContext.Create(connStr);
 ```
 
-* Run a stored procedure:
+Run a stored procedure:
 
 ```c#
 var connStr = ConfigurationManager.ConnectionStrings["myConnStr"].ToString();
@@ -90,7 +90,7 @@ using (var ctx = SqlDbContext.Create(connStr))
 }
 ```
 
-* Run a stored procedure with some arbitrary actions:
+Run a stored procedure with some arbitrary actions:
 
 ```c#
 using (var ctx = SqlDbContext.Create(connStr))
@@ -126,8 +126,7 @@ using (var ctx = SqlDbContext.Create(connStr))
 }
 ```
 
-* Insert into a table using SqlBulkCopy (assumes use of MSFT's EntityDataReader 
-   class):
+Insert into a table using SqlBulkCopy (assumes use of MSFT's EntityDataReader class):
 
 ```c#
 var products = from p in goodProducts
@@ -142,7 +141,7 @@ sqlDbContext.ExecuteSqlBulkCopy(
 	hasIdentity: true);
 ```
 
-* Run a stored procedure with a return value:
+Run a stored procedure with a return value:
 
 ```c#
 var rowVersion = ctx.ExecuteWithReturnValue<byte[]>(
@@ -151,7 +150,7 @@ var rowVersion = ctx.ExecuteWithReturnValue<byte[]>(
     StoredProcParam.ReturnValue("return", DbType.Binary));
 ```
 
-* Run a stored procedure with an out value:
+Run a stored procedure with an out value:
 
 ```c#
 var bit = StoredProcParam.OutParam("@someOutValue", DbType.Boolean);
