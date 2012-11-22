@@ -1,15 +1,12 @@
 SqlLightning
 ============
 
-SqlLightning V1.0
-License: MIT
+SUMMARY
+-------
 
-SUMMARY (TLDR)
---------------
-
-SqlLightning is a small, lightweight SQL data access layer designed to 
-supplement existing ORM technology. I wrote this tiny library for use in my own 
-professional and personal projects with the goal of building something that's 
+SqlLightning is a small, lightweight SQL data access layer designed to
+supplement existing ORM technology. I wrote this tiny library for use in my own
+professional and personal projects with the goal of building something that's
 fast, easy to use, and isn't overly complicated or hard to maintain. Simply
 implement a database access layer using stored procedures, instantiate a
 database context, and fire away. The source code is extensible, well documented,
@@ -18,11 +15,11 @@ and easy to read. Skip to the examples to see a sample of what you can do.
 WHAT IS IT?
 -----------
 
-SqlLightning exists to supplement existing object relational mapping systems 
-like nHibernate or Entity Framework. It is NOT designed to be a replacement for 
-such technologies, although I suspect one could write smaller projects entirely 
-using only SqlLightning if the need arose. SqlLightning allows the developer to 
-design and implement a data access layer forcing best practices set forth by 
+SqlLightning exists to supplement existing object relational mapping systems
+like nHibernate or Entity Framework. It is NOT designed to be a replacement for
+such technologies, although I suspect one could write smaller projects entirely
+using only SqlLightning if the need arose. SqlLightning allows the developer to
+design and implement a data access layer forcing best practices set forth by
 Microsoft. All calls to the database are required to be:
 
 1. Implemented as a stored procedure
@@ -30,7 +27,7 @@ Microsoft. All calls to the database are required to be:
 3. Use DBSafe types.
 
 All calls to the database in question are wrapped in a transaction and rolled
-back in the event of an exception. The base object is also disposable, and 
+back in the event of an exception. The base object is also disposable, and
 should be wrapped in a ```using``` block where necessary.
 
 Currently SqlLightning only supports a SQL server context--mainly because I
@@ -41,19 +38,19 @@ that.
 WHY USE IT?
 -----------
 
-Object relational mapping systems are required to be generic and flexible to 
+Object relational mapping systems are required to be generic and flexible to
 support the taxing task of mapping a relational model to an object-oriented one.
 Often times some issues fall out of extremely flexible designs which include
-performance. SqlLightning enables developers to quickly and securely go 
+performance. SqlLightning enables developers to quickly and securely go
 directly to the database when the need arises.
 
-A glaring example of this is the way the current iteration of Microsoft's 
+A glaring example of this is the way the current iteration of Microsoft's
 Entity Framework handles insertion on large numbers of objects. Currently,
 the query generator will create one SQL statement for every object added
 or updated in a given list--which can result in thousands, or tens of thousands
 of calls to a database in large, data-oriented applications. To be frank, EF
-chokes in this case. An easy way to fix this is to go directly to the database 
-with a SqlBulkCopy--which will execute many times faster on very large 
+chokes in this case. An easy way to fix this is to go directly to the database
+with a SqlBulkCopy--which will execute many times faster on very large
 datasets.
 
 Also, there's plenty of times when a simple more code oriented approach is
@@ -136,7 +133,7 @@ var products = from p in goodProducts
                  };
 
 sqlDbContext.ExecuteSqlBulkCopy(
-	tableName: "Product", 
+	tableName: "Product",
 	dataReader: products.AsDataReader(), // EDR
 	hasIdentity: true);
 ```
