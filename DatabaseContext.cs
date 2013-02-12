@@ -9,6 +9,12 @@
     /// </summary>
     public abstract class DatabaseContext : IDisposable
     {
+        #region Fields & Constants
+
+        private bool disposed;
+
+        #endregion
+
         #region Constructors & Destructors
 
         /// <summary>
@@ -61,8 +67,7 @@
 
         /// <inheritdoc />
         public override string ToString()
-        {
-            string me = "Connection State => {2}";
+        {            string me = "Connection State => {0}";
 
             return string.Format(
                 me,
@@ -122,7 +127,7 @@
         /// <param name="disposing">Is the context disposing?</param>
         protected virtual void OnDispose(bool disposing)
         {
-            if (disposing)
+            if (!this.disposed && disposing)
             {
                 try
                 {
@@ -132,9 +137,10 @@
                 {
                     // Eat exceptions
                 }
-            }
 
-            this.Connection = null;
+                this.Connection = null;
+                this.disposed = true;
+            }
         }
 
         /// <summary>
